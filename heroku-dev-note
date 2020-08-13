@@ -1,0 +1,115 @@
+Heroku
+
+Introduction And Setup
+create a free heroku account
+install python3.7=>, postgres, git and heroku
+
+If you don't have python3.7 locally, create a file runtime.txt
+and write into the file, python-3.7.8 to 
+
+heroku login: to login onto heroku
+heroku logout: to logout of heroku
+
+
+Prepare App
+This is where your app is ready. At times the project
+ may exits locally else remotely thus clone it locally
+What ever happens next happens inside the app dir
+
+For the sake of this tutorial, lets use some alreagy created
+ app from heroku.
+
+git clone https://github.com/heroku/python-getting-started.git
+cd python-getting-started
+
+Basically the app dir structure looks like this:
+app.json
+gettingstarted/
+hello/
+manage.py
+Procfile
+Procfile.windows
+README.md
+requirements.txt
+runtime.txt
+
+
+Deploy
+create heroku [appName]: will create a remote app on heroku
+ named appName else heroku names the app
+ 
+we shall call ours, myappmega so with the command, we create a heroku
+ app.
+ 
+heroku create myappmega
+
+git remote -v returns the following:
+heroku	https://git.heroku.com/myappmega.git (fetch)
+heroku	https://git.heroku.com/myappmega.git (push)
+origin	https://github.com/heroku/python-getting-started.git (fetch)
+origin	https://github.com/heroku/python-getting-started.git (push)
+
+In the above there is the remote for the source code itself.
+One could say, one for developement and the other for production.
+
+we can add our repository to the remote one, that is, if we created the 
+the heroku app before create the project locally:
+
+heroku git:remote -a {your-project-name}
+We add the project to a remote app on heroku
+
+git push heroku master, pushes the app (source code) to the remote
+  server on heroku.
+
+run heroku locally with, heroku local
+view t on the browser, http://0.0.0.0:5000/
+
+if there is an error, probably django-heroku,thus do,
+ python -m pip install django-heroku  and rerun, heroku local
+ 
+
+this is the link to the app, myappmega - https://myappmega.herokuapp.com/
+ 
+ 
+ 
+Let An Instance Of The App Run And Open The App
+
+heroku ps:sacle web=1 - this is a free 1 dyno version
+heroku open - opens the app in a broswer
+heroku ps:sacle web=0 - to scale to zero
+
+
+View Logs
+heroku logs --tail and ctrl+C to stop the streaming
+
+
+Declare App Dependencies
+
+create a requirements.txt file and add the following into it
+django
+gunicorn
+django-heroku
+
+do pip install -r requirements.txt to install locally
+
+and do pip list to see the installed dependencies
+
+
+Run Locallay
+heroku local web
+
+
+Push update
+with git push heroku master
+
+
+Best thing after this is to create a database for this.
+
+
+
+# resources for flask deployment
+https://www.geeksforgeeks.org/deploy-python-flask-app-on-heroku/
+https://stackabuse.com/deploying-a-flask-application-to-heroku/
+ 
+ 
+

@@ -1,0 +1,125 @@
+Bootstrap 4 - dev notes from brad traversy
+
+jQuery is required
+
+
+CLASSES
+container - kind of centers
+page-header - for h[1-7]
+lead - for paragraphs
+
+
+TAGS
+small, mark, del, u
+
+CONTEXTUAL COLORS
+primary, success, warning, info, danger
+
+ALIGNMENT & Transformation
+text-[left,right,center,justify,nowrap]
+text-[lowercase,uppercase,capitalize]
+
+QUICK FLOATS
+pull-[right,left,center]
+
+CLEAR FIX - clear when you use float
+clearfix
+
+Some Tags
+blockquote, blockquote-reverse
+cite:title
+code, kbd
+
+LIST
+list-unstyle - to remove the bullets (the style)
+list-inline
+
+
+CONTEXTUAL COLORS
+[bg,text]-[primary, success, warning, info, danger, muted]
+
+BUTTON
+btn - format as a button
+colors -> btn-[default, primary, success, warning, info, danger, link]
+sizes -> btn-[lg, sm, xs]
+btn[disabled=disabled]
+add role="button" to link to make it behave as a button
+
+
+FORMS
+<div class="container">
+	<form>
+		<div class="form-group">
+			<label>Name</label>
+			<input type="text" class="form-control" />
+		</div>
+	</form>
+</div>
+
+give form[class=form-inlinie] for an inline form
+
+TABLE
+table[class=table]
+table-[striped, bordered, hover, condensed]
+tr[class=primary, success, warning, info, danger]
+
+47:04
+LIST
+[ul,ol][class=list-group]
+li[class=list-group-item
+
+PANELS
+panel
+panel-default
+panel-deading
+panel-title
+panel-body
+panel-footer
+
+WELLS
+well
+well-[lg, sm]
+
+ALERT
+alert
+alert-[primary, success, warning, info, danger]
+add role="alert"
+alert-dismissable - to close an alert
+<div class="alert alert-warning alert-dismissable">
+	<button type="button" class="close" data-dismiss="alert">
+		<span>&times;</span>
+	</button> you can close this alert
+</div>
+
+
+PROGRESS BAR
+<div class="progress">
+	<div class="progress-bar" style="width:50%;">
+	50%
+	</div>
+</div>
+
+add contextual class
+progress-bar-[primary, success, warning, info, danger], striped, active to animate
+
+LABELS
+label label-[primary, success, warning, info, danger]
+
+BADGES
+<a href="#">Inbox <span class="badge">2</span></a>
+
+
+IMAGES
+thumbnail, img-[circle, rounded]
+
+GRID
+grids have 12 blocks
+row>col
+
+
+
+
+
+
+
+

@@ -1,0 +1,40 @@
+These are common Git commands used in various situations:
+
+Start A Working Area 
+   clone             Clone a repository into a new directory
+   init              Create an empty Git repository or reinitialize an existing one
+
+
+Work On The Current Change
+   add               Add file contents to the index
+   mv                Move or rename a file, a directory, or a symlink
+   rm                Remove files from the working tree and from the index
+   *restore          Restore working tree files
+   *sparse-checkout  Initialize and modify the sparse-checkout
+
+
+Examine The History And State
+   status            Show the working tree status
+   log               Show commit logs
+   diff              Show changes between commits, commit and working tree, etc
+   *bisect           Use binary search to find the commit that introduced a bug
+   *grep             Print lines matching a pattern
+   *show             Show various types of objects
+
+
+Grow, Mark And Tweak Your Common History
+   branch            List, create, or delete branches
+   commit            Record changes to the repository
+   switch            Switch branches
+   merge             Join two or more development histories together
+   reset             Reset current HEAD to the specified state
+   *rebase           Reapply commits on top of another base tip
+   *tag              Create, list, delete or verify a tag object signed with GPG
+
+Collaborate
+   fetch             Download objects and refs from another repository
+   pull              Fetch from and integrate with another repository or a local branch
+   push              Update remote refs along with associated objects
+   
+   
+   

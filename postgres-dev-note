@@ -1,0 +1,157 @@
+Postgres note
+
+after the installation, from, https://www.postgresql.org/, create a database,
+with the commnad, `createdb <database_name>`. We can delete the database with
+ the commnad, `dropdb <database_name>`.
+
+access database by, `psql <database_name>`.
+
+Create a database called, mydb and drop it afterward, with the commands, 
+`createdb mydb` and `dropdb mydb`, respectively. Now create mydb again.
+
+Open mydb in the postreg interactive shell by, `psql mydb`. This is what I see
+after the said command:
+```
+psql (12.3 (Ubuntu 12.3-1.pgdg20.04+1))
+Type "help" for help.
+
+mydb=# 
+```
+
+`mydb=#` means, I am a database superuser.
+
+enter `SELECT version();` to see the version of postgres you are using.
+Mine displayed:
+
+```
+                                                          version                                                           
+----------------------------------------------------------------------------------------------------------------------------
+ PostgreSQL 12.3 (Ubuntu 12.3-1.pgdg20.04+1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.3.0-10ubuntu2) 9.3.0, 64-bit
+(1 row)
+
+```
+
+The command, `SELECT current_date;`, returns the current date. Mine,
+displayed:
+
+```
+ current_date 
+--------------
+ 2020-07-29
+(1 row)
+
+```
+
+Then, `\h` returns available help and `\q` quits out of psql.
+
+
+
+Introduction
+The `\i` command reads in commands from the specified file, as in `\i sqlfile`
+
+
+Concepts
+PostgreSQL is a relational database management system 
+A table is made up of a named collection of rows and columns.
+A database cluster is a collection of databases managed by a single postgres server.
+
+
+Creating a New Table
+```
+CREATE TABLE <tb_name> (
+    attr type ...
+)
+```
+
+
+```
+CREATE TABLE Employee (
+    full_name varchar(80), -- full name
+    age int,
+    salary real,
+    job varchar(80)
+)
+```
+
+-- means a comment
+
+DROP TABLE <tb_name> deletes the table.
+
+
+Populating a Table With Rows
+`INSERT INTO <tb_name> VALUES (... attri coressponding values)` to create
+a new role in the database.
+
+For the Employee table we can insert, 
+
+`INSERT INTO Employee VALUES ('John Doe', 30, 2000, 'Software engineer');`
+will in insert a row into the database.
+
+Constants that are not simple numeric values usually must be surrounded by
+ single quotes (')
+
+
+Querying a Table
+`SELECT * FROM <tb_name>;`
+`SELECT <field> FROM <tb_name>;`
+`SELECT * FROM <tb_name> WHERE <field>=<val>;`
+`SELECT <field_1> AS <alias_1, ... FROM <tb_name> WHERE <field>=<val>;`
+
+Logicals : AND OR and NOT
+
+`SELECT * FROM <tb_name> WHERE <field_1>=<val_1> AND <field_2>=<val_2>;`
+`SELECT * FROM <tb_name> ORDER BY <some_field(s)>;`
+
+`SELECT DISTINCT <field(s)> FROm <tb_name>;`
+
+
+Joins Between Tables
+We can query two orm more tables or access a table in such a way that 
+ 2 or more parts of the table are been processed at the same time, 
+using a join query.
+
+`SELECT <tb_1>.<attri_1>, <tb_2>.<attri_2> FROM <tb_1> as <alias_1>, 
+<tb_2> as <alias_2> WHERE <some_attri>=<some_val> OR <another_attri>=
+<another_val> ORDERY BY <some_there_attri>;`
+
+
+
+
+Aggregate Functions
+max, count, avg
+
+There is also LIKE 
+
+
+Updates
+`UPDATE TABLE <tb> SET <field>=<val> WHERE <some_field>=<some_value>;`
+
+
+Deletions
+`DELETE FROM <tb> WHERE <field>=<val>;`
+`DELETE FROM <tb>;`  deleted all the data in the tb
+
+
+VIEWS
+
+Foreign key
+
+CREATE TABLE cities (city varchar(80) primary key, location point);
+
+CREATE TABLE weather (
+    city varchar(80) references cities(city),
+    temp_lo int,
+    temp_hi int,
+    prcp real,
+    date date
+);
+
+Begin and Commit;
+BEGIN;  and COMMIT; delimits a collection of questions to be executed together
+
+BEGIN;
+UPDATE accounts SET balance = balance - 100.00
+    WHERE name = 'Alice';
+-- etc etc
+COMMIT;
+

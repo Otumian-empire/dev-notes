@@ -1,0 +1,25 @@
+Django rest framework - edureka
+-------------------------------
+
+agenda:
+	What is an API?
+	Introduction to REST Framework
+	What is Rest API?
+	Dedo - create a RESTful API
+
+Api provides an interface for the interactivity of multiple softwares (programes)
+
+REST Framework describes the architecture which stands for REpresentational State
+ Transfer. It is used for data communication. It uses HTTP to make calls between
+ endpoints (machines).
+Some methods such as GET, POST, PUT, DELETE.
+
+Any REST Service which use the REST Framework is called a REST API. The return JSON
+
+do `pip install djangorestframework` to install djangorestframework
+
+then the add `rest_framework` to your apps in django
+
+start a project and add it to the apps
+start an app
+

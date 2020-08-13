@@ -1,0 +1,107 @@
+How to design a REST API
+
+Steps in designing REST Services
+* Identify Object Model
+    identifying the objects which will be presented as resources.
+    we will consider only two resources i.e.
+
+    1. Devices
+    2. Configurations
+    
+    These resources will have a unique identifier, id
+* Create Model URIs
+
+    These resource URIs are endpoints for RESTful services.
+    
+    Example:
+    
+    /devices
+    /devices/{id}
+     
+    /configurations
+    /configurations/{id}
+     
+    /devices/{id}/configurations
+    /devices/{id}/configurations/{id}
+    
+    Use Plurals for resource urls and use nouns and NOT the verbs
+    Just like the above and not /getAllProducts or /getProduct/{id}
+    The HTTP methods describes the end point
+    
+    this, /products avoids /product/all and even /product may even
+     give the idea of reading a single object
+     
+    
+* Determine Representations/format
+    how the data is composed, as JSON or XML. Use JSON
+    
+* Use of right HTTP methods
+    GET  —        To get a resource or collection of resources.
+    POST  —       To create a resource or collection of resources.
+    PUT/PATCH  —  To update the existing resource or collection of 
+     resources.
+    DELETE  —     To delete the existing resource or the collection
+     of resources.
+  
+* Use parameters
+    /products?name=’ABC’ should be preffered over /getProductsByName
+    /products?type=’xyz’ should be preferred over /getProductsByType
+    
+    This is help avoid long urls
+
+* Use proper HTTP codes
+    200 OK  —  This is most commonly used HTTP code to show that the 
+     operation performed is successful.
+    201 CREATED  —  This can be used when you use POST method to
+     create a new resource.
+    202 ACCEPTED  —  This can be used to acknowledge the request
+     sent to the server.
+    400 BAD REQUEST  —  This can be used when client side input
+     validation fails.
+    401 UNAUTHORIZED / 403 FORBIDDEN — This can be used if the user
+     or the system is not authorised to perform certain operation.
+    404 NOT FOUND — This can be used if you are looking for certain
+     resource and it is not available in the system.
+    500 INTERNAL SERVER ERROR  —  This should never be thrown explicitly
+     but might occur if the system fails.
+    502 BAD GATEWAY  —  This can be used if server received an invalid
+     response from the upstream server.
+
+* Versioning
+    use versions as dates or query parameters
+    
+    /v1/products
+    /v2/products
+    
+    Avoid the use of dot ( . ) in the version. as in /v1.2/products
+    
+* Use Pagination
+    Use of pagination is a must when you expose an API which might return
+     huge data and if proper load balancing is not done, the a consumer 
+    might end up bringing down the service.
+
+
+    Use of limit and offset is recommended here. 
+    For example, /products?limit=25&offset=50
+    It is also advised to keep a default limit and default offset.
+    
+* Use Proper Error Messages
+    {
+      "error": {
+        "message": "(#803) Some of the aliases you requested do not exist: products",
+        "type": "OAuthException",
+        "code": 803,
+        "fbtrace_id": "FOXX2AhLh80"
+      }
+    }
+    
+* Use of Open API specifications
+    Use swagger to design the api before
+    
+
+Resource
+How to design a REST API - https://restfulapi.net/rest-api-design-tutorial-with-example/
+RESTful API Design — Step By Step Guide - https://hackernoon.com/restful-api-design-step-by-step-guide-2f2c9f9fcdbf
+List of HTTP codes - https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+Swagger - https://swagger.io/resources/open-api/
+

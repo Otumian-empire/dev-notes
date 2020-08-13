@@ -1,0 +1,73 @@
+React - codevolution - by Vishuaz
+
+1. intro 
+ react is a js lib used for developing UI
+ react is a component based architecture making code reusable
+ react is declarative - thus we tell what we want react does it
+ react natice for mobiles
+
+ prerequisite: 
+  HTML, CSS, 
+  JS - filter, map, this and reduce,
+  ES6 - let and const, ()=>{}, str temps, default params, obj literals, rest 
+   and spread optr, destructuring assignment
+
+ Course content
+  - fundamentals
+  - http
+  - routing
+  - redux (state mgmt)
+  - utilities (or libs)
+
+2. helloworld
+ mkdir helloworld/ && cd helloworld
+ npx create-react-app helloworld-app .
+ cd helloworld-app
+ npm start
+
+ edit scr/App.js and save to reload
+ add, <p>Hello world</p>
+ surround anything you comment out with curly brackets
+
+ ALT approach for npx
+  npm install create-react-app -g
+  create-react-app helloworld-app
+
+3. folder structure
+ 3 folders
+  - node_modules: contains all installed dependencies
+  - public: html file for spa
+  - src: contains the main source files for development
+ 4 files
+  - package.json: contains dependencies and scripts required for the project
+  - package-lock.json: ensures sonsistent installations of your dependencies
+  - .gitignore and README.md
+ 
+4. components
+ components are part of the UI
+ this application has 5 components, header, sidenav, main content, footer and
+  the root component (root - App)
+  component code is placed in a js file
+  
+  component type
+   there are 2 component types
+    - stateless functional component
+     these are js functions that return html that describes the UI
+     # code
+     function Welcome(props) {
+      return <h1>Hello, {props.name}</h1>;
+     }
+     
+    - stateful class component
+     these are es6 classes that extends the component class from the react 
+     library. they contain render method returning html
+     # code
+     class Welcome extends React.Component {
+       render() {
+        return <h1>Hello, {this.props.name}</h1>;
+       }
+     }
+ 
+5. functional component - stateless component 
+ 
+

@@ -1,0 +1,286 @@
+Javascript development notes - combo
+
+- varible declaration with `var` makes the variable redeclarable afterwards
+# code - this may be a problem in some cases
+// var is a global variable
+var counter = 23;
+var counter = "I am a counter";
+
+- variables has scope
+# code
+var name  = "Ed";
+// name can be used anywhere in the program as it is in the global scope
+
+function sayName() {
+	var name = 'Ed';
+	// name is in the function scopes thus exist only in the function scope
+}
+
+- let and const
+- variables declared with const can't be reassigned after initialization
+# code
+const name = "admin";
+// name = "user"; will raise an error - Assignment to constant variable
+
+// let supports reassignment unlike const
+# code - variable declaration with `let`
+let name = "admin";
+name = "user"; // this will work
+
+// let and const are block scope
+# code
+const someList = [1,2,3,4,5];
+
+for (let i = 0; i < someList.length; i++) {
+  console.log(someList[i]);
+}
+
+// console.log(i); will result in a error
+// but if i was declared with `var` then there won't be any error
+// thus it is bad...
+
+- Back ticks with strings (concatenation)
+# code
+const name = "Daniel";
+console.log(`my name is ${name}`)
+
+
+- Object literals
+# code - Old Js
+function getProfile(name, job) {
+	return {
+		name: name,
+		job: job
+	};
+}
+
+var myProfile = getProfile('Danny', 'Software Engineer');
+console.log(myProfile)  // output is an object
+
+# code ES6 approach
+// since the value passed has the same name as the key,
+// just passone and leave the other
+function getProfile(name, job) {
+	return {
+		name, job
+	};
+}
+
+- Object deconstruction
+# code
+function getProfile(name, job) {
+	return {
+		name, job
+	};
+}
+
+// deconstruction
+const {name, job} = getProfile('Dan', 'SWE');
+
+- Arrow functions
+# code - old ways of writing functions
+function sayHello() {
+	console.log('Hello');
+}
+
+var sayHi = function() {
+	console.log('Hi');
+};
+
+sayHello();
+sayHi();
+
+# code - ES6
+
+const sayHello = () => {
+	console.log('Hello');
+};
+
+const sayHello = arg => {
+	console.log(`Hello ${arg}`);
+};
+
+const sayHello = (name, job) => {
+	console.log(`My name is ${name} and I am a/an ${job}`);
+};
+
+const sayHello = () => console.log('Hello');
+
+- this
+# code
+var profile = {
+	name: "Stan",
+	getName: function() {
+		console.log(this.name);
+		var that = this;  // or use an arrow function
+
+		var someFunction = function() {
+			// console.log(this.name); - error
+			console.log(that.name);
+		};
+
+		someFunction();
+	}
+}
+
+getName();
+
+# code
+var profile = {
+	name: "Stan",
+	getName: function() {
+		console.log(this.name);
+
+		var someFunction = () => {
+			console.log(this.name);
+		};
+
+		someFunction();
+	}
+}
+
+getName();
+
+// use an arrow function when it comes to event
+
+- Default values
+# code
+function add(x,y) {
+	return x + y;
+}
+
+// we'd get NaN when we pass no args
+# code
+function add(x,y) {
+	var a = x || 0;
+	var b = y || 0;
+	return a + b;
+}
+
+# code - ES6, we pass the default args in the args body
+const add = (x = 0,y = 0) => {
+	return x + y;
+}
+
+- Some array functions in ES6
+- forEach(callback) on an array
+# code
+const myList = [1,2,3,4,5];
+myList.forEach(num => {
+	console.log(num + 3);
+});
+
+// make get the value and key
+const myList = ['pendrive', 'laptop', 'mouse', 'phone', 'duck'];
+myList.forEach((value, index) => {
+	console.log(`${value} has a key of ${index}`);
+});
+
+- Map - with this we can make a copy of an array and then modify it
+# code
+const myList = [1,2,3,4,5];
+// we modify the old list using a map and assign it to a new list object
+const newList = myList.map(num =>	num + 3);
+console.log(newList);
+
+- Filter - with this we get a filtered array object
+# code
+const myList = [1,2,3,4,5];
+// filter even numbers out
+const evenNums = myList.filter(num =>	num % 2 == 0);
+// num % 2 will return odd numbers if 1 thus true else 0 which is kinda false
+console.log(evenNums);
+
+- Constructor function - a function that lets you create an object
+# code
+// this has the attribute
+function Profile(name, job) {
+	this.name = name;
+	this.job = job;
+}
+
+// we can add a functionality using the prototype approach
+// TheObject.prototype.functionName = functionBody
+
+// this is like a method
+Profile.prototype.describeMe = function() {
+	console.log(`my name is ${this.name} and i do ${this.job}`);
+}
+
+// we use the new keyword to create a new object or instance of the object
+var me = new Profile('dan', 'SW-Eng');
+console.log(me);
+me.describeMe();
+
+// so say we have the profile object and we want to inherit it properties
+// we are talking inheritance with same attributes
+// Profile.call(this, properties)
+function BlackProfile(name, job, pet) {
+	Profile.call(this, name, job);
+	this.pet = pet;
+}
+
+// to get the functionality, we do,
+// Child.prototype = Object.create(Parent.prototype);
+BlackProfile.prototype = Object.create(Profile.prototype);
+
+// now we can do
+const bProf = new BlackProfile('dan', 'dev', '9x');
+bProf.describeMe();
+
+# code - the ES6 approach using a class
+class Profile {
+	// we create a constructor
+	constructor(name, job) {
+		this.name = name;
+		this.job = job;
+	}
+	
+	describeMe() {
+		console.log(`my name is ${this.name} and i do ${this.job}`);
+	}
+}
+
+const p = new Profile('Dan', 'dev');
+p.describeMe();
+
+// to inherite the abpve class we have to extend it
+class BlackProfile extends Profile {
+	// to bind it, we call the super keyword
+	// we used ParentObject.call(this, properties);
+	constructor(name, job, pet) {
+		super(name, job);
+		this.pet = pet;
+	}
+	
+	describeMe() {
+		console.log(`my name is ${this.name}, i do ${this.job} and my pet is ${this.pet}`);
+	}
+}
+
+
+const b = new BlackProfile('dan', 'dev', 'ducky');
+b.describeMe();
+
+- Promises
+$$$$ 49:12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

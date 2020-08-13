@@ -1,0 +1,124 @@
+NOTE on SQA
+
+Basic set up
+
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI']='sqlite:////tmp/test.db'
+
+db = SQLAlchemy(app)
+
+class User(db.Model):
+	id = db.Column(db.Integer,primary_key=True)
+	username = db.Column(db.String(80),unique=True,nullable=False)
+	email = db.Column(db.String(120),unique=True,nullable=False)
+
+	def__repr__(self):
+		return f'User {self.username}'
+
+
+do on the commandline, 
+
+# code
+from app import db
+db.create_all()
+
+
+SQLALCHEMY_DATABASE_URI => The database URI that should be used for theconnection
+
+
+Use Column to define a column. The name of the column is the name you assign it to.
+If you want to use a different name in the table you can provide an optional first argument
+ which is a string with the desired column name.
+Primary keys are marked with primary_key=True.
+Multiple keys can be marked as primary keys in which casethey become a
+compound primary key.The types of the column are the first argument toColumn.
+You can either provide them directly or call them to further specify them
+(like providing a length).
+
+
+The following types are the most common:
+Integer - an integer
+String(size) - a  string  with  a  maximum  length  (optional  in  some  databases,  e.g.PostgreSQL)
+Text - some longer unicode text
+DateTime - date and time expressed as Python datetime object.
+Float - stores floating point values
+Boolean - stores a boolean value
+PickleType - stores a pickled Python object
+LargeBinary - stores large arbitrary binary data
+
+
+Inserting data into the database is a three step process:
+1. Create the Python object
+2. Add it to the session
+3. Commit the session
+
+
+# code
+>>> from yourapp import User
+>>> me = User('admin','admin@example.com')
+>>> db.session.add(me)
+>>> db.session.commit()
+
+
+Deleting records is very similar, instead of add() use delete():
+
+
+User.query.filter_by(id=2).delete()
+db.session.commit()
+
+# code
+>>> db.session.delete(me)
+>>> db.session.commit()
+
+
+you an use methods like filter(), all(), first(), get()
+Retrieve a user by username:
+>>> peter = User.query.filter_by(username='peter').first()
+>>> peter.id
+>>> peter.email
+
+
+Same as above but for a non existing username gives None:
+>>> missing = User.query.filter_by(username='missing').first()
+>>> missing is None
+
+Selecting a bunch of users by a more complex expression:
+>>> User.query.filter(User.email.endswith('@example.com')).all()
+
+
+Ordering users by something:
+>>> User.query.order_by(User.username).all()
+
+Limiting users:
+>>> User.query.limit(1).all()
+
+Getting user by primary key:
+>>> User.query.get(1)
+
+
+
+Queries in a view
+use get_or_404() instead of get()
+use first_or_404() instead of first()
+
+these will raise 404 error instead of of None
+# code
+@app.route('/user/<username>')
+def show_user(username):
+	user = User.query.filter_by(username=username).first_or_404()
+	return render_template('show_user.html', user=user)
+
+
+Execptions
+- IntegrityError
+
+
+
+
+
+
+
+ 

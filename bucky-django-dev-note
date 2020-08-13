@@ -1,0 +1,15 @@
+* Filter by any of the columns or attributes
+* Filter by atrr__startswith
+* in the admin.py, import your models then do admin.site.register(models)
+* when ever there is a foreign key you may do something like
+* model1.model2_set.all() to select all items in the model2 that has 
+something to do with model1
+* model1.model2_set.create(**kwargs) pass the attributes of the model 2
+ without the foreign key
+* add the app_name = 'my app' into the apps urls file
+* in any url, {% url "app_name_space:url_name" some_key %}
+* get_object_or_404(Model_name, some_key=some_value)
+
+* add static to the app dir, in it add app dir then the static dirs
+
+

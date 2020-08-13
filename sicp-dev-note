@@ -1,0 +1,497 @@
+Chapter 1
+Building Abstractions with Procedures
+
+Computational processes are abstract beings that inhabit computers. Data are abstract things that we process. A program (a pattern of rules) directs the process. 
+
+Every powerful language has three mechanismsto organize our ideas about processes:
+* primitive expressions: which represent the simplest entities the language is concerned with
+* means of combination: by which compound elements are built from simpler ones
+* means of abstraction: by which compound elements can be named and manipulated as units
+
+In programming, we deal with two kinds of elements: procedures and data.
+Informally, data is ``stuff'' that we want to manipulate, and procedures are descriptions of the rules for manipulating the data.
+
+
+(+ 1 2) -> 3
+(+ 2.7 10) -> 12.7
+
+A combination is an expression formed by delimiting a list of expressions within parentheses in order to denote procedure application. This has the operator followed by the operands as the argument. This follows the prefix notation.
+
+This supports nesting
+
+(+ (* 2 4) (/ 10 5)) 
+    which is similar to
+(+  (* 2 4)
+    (/ 10 5)) -> 10
+    
+    
+
+A critical aspect of a programming language is the means it provides for using names to refer to computational objects. We say that the name identifies a variable whose value is the object.
+
+In the Scheme dialect of Lisp, we name things with define.
+
+Typing (define <var> <val>)
+
+(define dob 1990)
+(define year 2020)
+(define age (- year dob))
+age
+
+
+(define pi 3.143)
+(define radius 5.6)
+(define circumference (* pi (* raduis radius)))
+circumference
+
+
+define is a means of abstraction. It allows us to use simple names to refer to the results of compound operations.
+
+The interpreter maintains a memory called the (global) environment that keeps track of the name-object pairs.
+
+procedure definitions is a much more powerful abstraction technique by which a compound operation can be given a name and then referred to as a unit.
+
+The general form of a procedure definition is
+(define (<name> <formal parameters>) <body>)
+
+Example is the square program
+
+(define (square x)
+    (* x x))
+
+(square 3) -> 9
+
+This abstraction can also be abstracted upon. COnsider the sum of squares program, making use of the square program.
+
+(define (sum-of-squares a b)
+    (+ (square a) (sqaure b)))
+
+(sum-of-sqaures 1 2) -> 5
+
+We can also consider another procedure
+
+(define (func a)
+    (sum-of-square (+ a 1) (* a 2)))
+    
+(func 3) -> 52
+
+lets break this down
+
+(func 3)
+(sum-of-square (+ 3 1) (* 3 2))
+(sum-of-square 4 6)
+(+ (square 4) (square 6))
+(+ (* 4 4) (* 6 6))
+(+ 16 36)
+-> 52
+
+
+case analysis is when we check for some predicate and based on that we execute some expression.
+Lisp for notating such a case analysis is called cond (which stands for conditional), 
+and it is used as follows:
+
+(define (abs x)  
+    (cond ((> x 0) x)
+        ((= x 0) 0)
+        ((< x 0) (- x))))
+
+|x| = +x
+
+The general form of a conditional expression is
+(cond (<p1> <e1>)
+      (<p2> <e2>)
+      (<pn> <en>))
+      
+where p is predicate and e is expression
+
+(define (abs x)
+  (cond ((< x 0) (- x))
+          (else x)))
+          
+If statement can also be used as in general, 
+    (if <predicate> <consequent> <alternative>)
+    
+(define (abs x)
+    (if (< x 0) (- x) x))
+    
+    
+In addition to primitive predicates such as <, =, and >, there is and, or and not (unary)
+
+The black box concept is also know as the procedural-abstraction. Say you have a procdure that makes use of other procedures in a manner that makes it hard to say how the procedure is actually doing the process.
+
+Lets say there is this procedure,
+
+(define (test x) (+ x 1))
+
+When using test, you can pass y to it or any other value as far as it is an integer value so basically, (define (test y) (+ y 1)) are the same. The kind of variable passed to it is local to the procedure.
+
+
+Procedures are, in effect, abstractions that describe compound operations on numbers independent of the particular numbers.
+Say we have (define (square n) (* n n)), this is a procedure to obtain the square of any number and not a particular number.
+We could do without define the mentioned procedure but always we'd have to use primitive operators. One of the things we should demand from a powerful programming language is the ability to build abstractions by assigning names to common patterns and then to work in terms of the abstractions directly. We will need to contruct procedures that can accept other procedures as argument or return them as a value. Procedures that manipulate procedures are called higher-order procedures.
+
+
+lets define a procedure that sums integers in a given range
+
+(define (sum a b) (+ a b))
+
+(define (sum-ints a b)
+    (if (> a b)
+        0
+        (sum a
+            (sum-ints (sum a 1) b))))
+
+; `cube` is a built-in procedure       
+(define (sum-cubes a b)
+    (if (> a b)
+        0
+        (sum (cube a)
+            (sum-cubes (sum a 1) b))))
+
+if we observe well the two procedures above, obviously a pattern can be seen. We can then create that pattern, as
+
+(define (name a b)
+    (if (> a b)
+        0
+        (sum (do-some-thing a)
+            (name (do-another-thing-to a) b))))
+
+to simply put
+(define (⟨name⟩ a b)
+    (if (> a b)
+        0
+        (+ (⟨term⟩ a)
+            (⟨name⟩ (⟨next⟩ a)
+                b))))
+
+So what we did basically is pass a procedure as argument
+
+
+Procedures  abstract compound operations on numbers independent of the particular numbers.
+
+There this concept known as lambda, so for lambda, instead of you creating a procedure and call that procedure, you just get the functionality at the go. Lambda is known as as anonymous.
+
+Lambda is basically a procedure with no name, but instead of say, (define (name arg) (body)), you do (lambda (arg) (body))
+
+(define (sq x) (* x x)) would be (lambda (x) (* x x)).
+
+Lets consider rewriting the square procedure using lambda.
+
+(define (square n) (* n n))
+
+(define square (lambda (x) (* x x)))
+
+The above are the same.
+
+Consider some procedures on the fly.
+
+(lambda (n m) (+ 2 n (* 2 m))) ; this is our procedure. assuming we named it prodl, then we'd do, (prodl 3 4), right,
+well, lets replace prodl with its lambda expression.
+((lambda (n m) (+ 2 n (* 2 m))) 3 4)
+
+
+Lambda is used in creating local variables. Suppose we have a function, 
+    f(x, y)= x(1+xy)^2 + y(1-y) + (1+xy)(1-y), we could reduce it to
+    a = (1 + xy)
+    b = (1-y)
+    f(x, y) = xa^2 + yb + ab
+
+
+there are 3 solutions to implement f.
+1. create an auxilliary procedure, a helping function, which takes a and b as argment
+2. inplace of the auxilliary procedure, use lambda, nothing changes
+3. Use local variables - awesome.
+
+sol.1 - auxilliary procedure
+(define (f x y)
+    (define (f-? a b) 
+        (+ (* x (square a))
+            (* y b)
+            (* a b)))
+            
+     (f-? (+ 1 (* x y))
+        (- 1 y)))
+        
+
+lets break this code down (f-?)
+the helper function does, xa^2 + yb + ab. It takes a and b as args. So when we call f-?, we passed  a = (1 + xy) and b = (1-y)
+
+
+sol.2 - lambda
+(define (f x y)
+    ((lambda (a b) 
+        (+ (* x (square a))
+            (* y b)
+            (* a b)))
+            
+      (+ 1 (* x y))
+        (- 1 y)))
+
+just like the above, we passed a and b at the end of the lam
+
+sol.3 - local variables
+
+(define (f x y)
+    (let ((a (+ 1 (* x y)))
+          (b (- 1 y)))
+          
+          (+ (* x (square a)) (* y b) (* a b))))
+        
+
+This the general for of let
+(let ((var1 exp1) ... (varn expn)) body)
+      
+Let has 2 parts, a list of name-expression pairs, where by the name is assigned the value of the expression. Then the body, which makes use of the names as a local variable.
+
+One thing is that, the above general let is the same as the lambda below,
+
+((lambda (var1 ... varn) body) exp1 ... expn)
+
+
+More examples, here we want to find the sum of the square and cube of a number, x
+(define (f x)
+    (let ((s (* x x)) (c (* x x x))) (+ s c)))
+    
+(define (f x)
+    ((lambda (s c)
+        (+ s c))
+        (* x x) (* x x x)))
+        
+(define (f x)
+    (define (f-h s c)
+        (+ s c))
+    
+    (f-h (* x x) (* x x x)))
+
+(define (f x)
+    (define s (* x x))
+    (define c (* x x x))
+    
+    (+ s c))
+
+So given, f(x, y)= x(1+xy)^2 + y(1-y) + (1+xy)(1-y), we can write a = (1 + xy) and b = (1-y) so that we can finally write F(x, y) = xa^2 + yb + ab.
+
+; this looks more simple
+(define (f x y)
+    (define a (+ 1 (* x y)))
+    (define b (- 1 y))
+    
+    (+ (* x (square a))
+        (* y b)
+        (* a b)))
+        
+        
+
+
+
+Chapter 2
+Building Abstractions with Data
+
+Data abstraction is the general technique of isolating the parts of a program that deal with how data objects are represented from the parts of a program that deal with how data objects are used.
+
+Consider the task of designing a system to perform arithmetic with rational numbers. In terms of simple data, a rational number can be thought of as two integers: a numerator and a denominator. It would be much better if we could “glue together” a numerator and denominator to form a pair — a compound data object — that our programs could manipulate in a way that would be consistent with regarding a rational number as a single conceptual unit.
+
+Data abstraction makes programs much easier to design, maintain, and modify
+
+Consider the idea of forming a “linear combination” ax + by. 
+
+We might like to write a procedure that would accept a, b, x, and y as arguments and return the value of ax + by. This presents no difficulty if the arguments are to be numbers, because we can readily define the procedure
+(define (linear-combination a b x y)
+    (+ (* a x)
+        (* b y)))
+        
+We could express this as a procedure of the form
+(define (linear-combination a b x y)
+    (add (mul a x)
+        (mul b y)))
+        
+add and mul are not the primitive procedures + and *
+
+One key idea in dealing with compound data is the notion of closure — that the glue we use for combining data objects should allow us to combine not only primitive data objects, but compound data objects as well. Another key idea is that compound data objects can serve as conventional interfaces for combining program modules in mix-and-match ways. We illustrate some of these ideas by presenting a simple graphics language that exploits closure.
+ 
+Data abstraction is a methodology that enables us to isolate how a compound data object is used from the details of howit is constructed from more primitive data objects.
+
+We want to be able to add, subtract, multiply, and divide them and to test whether two rational numbers are equal.
+
+Assuming we already have a way of construct-ing a rational number from a numerator and a denominator. We also assume that, given a rational number, we have a way of extracting (or selecting) its numerator and its denominator. Let us further assume that the constructor and selectors are available as procedures:
+
+• (make-rat ⟨n⟩ ⟨d⟩) returns the rational number whose numera-tor is the integer ⟨n⟩ and whose denominator is the integer ⟨d⟩.
+• (numer ⟨x⟩) returns the numerator of the rational number ⟨x⟩.
+• (denom ⟨x⟩) returns the denominator of the rational number ⟨x⟩.
+
+Eventually we should be able to add, subtract, multiply, divide and test for equality of rational numbers.
+
+(define (add-rat x y)
+    (make-rat (+ (* (numer x) (denom y)) (* (numer y) (denom x)))
+        (* (denom x) (denom y))))
+
+(define (sub-rat x y)
+    (make-rat (- (* (numer x) (denom y)) (* (numer y) (denom x)))
+        (* (denom x) (denom y))))
+    
+    
+(define (mul-rat x y)
+    (make-rat (* (numer x) (numer y))
+        (* (denom x) (denom y))))
+
+(define (div-rat x y)
+    (make-rat (* (numer x) (denom y))
+        (* (denom x) (numery))))
+
+(define (equal-rat? x y)
+    (= (* (numer x) (denom y))
+        (* (numer y) (denom x))))
+
+
+numer, denom, and make-rat are not yet defined thus we need is some way to gluetogether a numerator and a denominator to form a rational number
+
+There is Pair, cons which hold only 2 data.
+(define cord (cons 1 2))
+(car cord) -> 1
+(cdr cord) -> 2
+
+cons stands for “construct.”
+car = “Contents of Address part of Register”
+cdr = “Contents of Decrement part of Register”
+
+
+The single compound-data primitive pair, implemented by the procedures cons, car, and cdr, is the only glue we need. Data objects constructed from pairs are called list-structured data.
+
+(define (make-rat n d)
+    (cons n d))
+
+(define (numer x)
+    (car x))
+    
+(define (denom x)
+    (cdr x))
+
+in order to display the results of our computations, we can print rational numbers by printing the numerator, a slash, and the denominator
+
+(define (print-rat x)
+    (newline)
+    (display (numer x))
+    (display "/")
+    (display (denom x)))
+
+Lets do some testing
+
+(define one-half (make-rat 1 2))
+(print-ratone-half)
+1/2
+
+
+Lets redefine make-rat to account for simplification
+(define (make-rat n d)
+    (let ((g (gcd n d)))
+        (cons (/ n g) (/ d g))))
+ 
+
+As we made sure that the make-rat did gcd on the n and d, it would have been better if the gcd was done when selecting the numerator and denominator.
+
+(define (make-rat n d)
+    (cons n d))
+    
+(define (numer x)
+    (let ((g (gcd (car x) (cdr x))))
+        (/ (car x) g)))
+        
+(define (denom x)
+    (let ((g (gcd (car x) (cdr x))))
+        (/ (cdr x) g)))
+
+
+Basically we do gcd when we want the numberator and denominator. it would be preferable to compute thegcdwhen therational numbers are constructed
+
+
+One of the useful structures we can build with pairs is asequence—anordered collection of data objects.
+The sequence 1, 2, 3, 4 can be written as 
+(cons 1
+    (cons 2
+        (cons 3
+            (cons 4 nil))))
+
+This is biult using nested conses and nested conses are not as list. Using a list we could have written that 
+(list 1 2 3 4), simple, right?
+
+Lets do some basic defiitions
+
+(define l (list 1 2 3 4))  ; creates a list of 1 2 3 4.
+Note that (1 2 3 4) is not the same as (list 1 2 3 4) because in the former, 1 is the operator (procedure) on the argument, 2 3 4.
+
+car selects the first element in the list while cdr, the rest.
+(define l (list 1 2 3 4))
+(car l)
+(cdr l)
+
+We can update the list as,
+(cons 10 l)
+(10 1 2 3 4)
+
+cadr will return the second in the list
+
+Lets create the procedure list-ref which takes as arguments a list and a number n, and returns the nth item of the list and begins.
+So if n = 0 then list-ref returns (car item) else we return (lift-ref (cdr item) (- n 1)). Lets define list-ref
+
+(define (list-ref item n)
+    (if (= n 0)
+        (car item)
+        (list-ref (cdr item) (- n 1))))
+        
+; let select 4, which is at position 2 thus index (2 - 1 = 1), since the index is starting from 0
+(define evennums (list 2 4 6 8 10))
+(list-ref evennums 1)
+
+
+Scheme has the procedure, null? which check if an object is null.
+Let write a program to find the length of a list
+
+(define (length items)
+    (if (null? items)
+        0
+        (+ 1 (cdr items))))
+
+
+We can have a procedure append, (append list-1 list-2) which returns a combination of the 2 list. This can be done using the cons as done up above.
+
+
+The procedures +, *, and list take arbitrary numbers of arguments. One way to define such procedures is to use define with dotted-tail notation. In a procedure definition, a parameter list that has a dot before the last parameter name indicates that, when the procedure is called, the initial parameters (if any) will have as values the initial arguments, as usual, but the final parameter’s value will be a list of any remaining arguments. For instance, given the definition
+(define (f x y . z)
+    ⟨body⟩)
+
+the procedure f can be called with two or more arguments. If we evaluate
+(f 1 2 3 4 5 6)
+then in the body of f, x will be 1, y will be 2, and z will be the list (3 4 5 6)
+
+Again, given the definition
+(define (g . w)
+    ⟨body⟩)
+the procedure g can be called with zero or more arguments. If we evaluate
+(g 1 2 3 4 5 6)
+then in the body of g, w will be the list (1 2 3 4 5 6).
+
+In the code below, we iterate over a list and multiply each item in the list by some factor
+
+(define (scale-list items factor)
+    (if (null? items)
+        nil
+        (cons (* (car items) factor)
+            (scale-list (cdr items) factor))))
+            
+(scale-list (list 1 2 3 4 5) 10)
+(10 20 30 40 50)
+
+This expression, (set! ⟨name⟩ ⟨new-value⟩), reassigns a new value to name.
+
+
+
+
+
+
+
+
+
+
+
+
+
+

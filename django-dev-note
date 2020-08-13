@@ -1,0 +1,75 @@
+Django Notes
+(channel: coding for enterprenuers, dev: Justin)
+
+00:00:00
+A WebApp is a smart website - DB, security, etc.
+
+Getting started
+- Create a directory for the project
+- Create a virtual enviroment - pipenv
+- pipenv --python 3.6 install django==2.2
+- pipenv shell
+- mkdir src (this is where we'd keep the source code)
+- cd src
+- django-admin startproject try_django .
+- python[3] manage.py runserver 
+(visit http://127.0.0.1:8000/) to see the app
+- python[3] manage.py migrate
+- python[3] manage.py createsuperuser
+- create a new file, views.py and save it at where 
+seetings.py is
+- in views.py, define your views and import the views 
+in the urls.py and add the url to the urllist
+- create a 'templates' folder in the src dir (rd)
+- add some html files to it
+- do from django.shortcuts import render, so return 
+render(request, temp_name)
+- go into settings.py and set the path to the template
+os.path.join(BASE_DIR, 'templates')
+00:44:46
+
+00:44:46
+- Make use of a template to apply DRY
+- Django uses jinja template
+
+render a .xx file
+- from django.template.loader import get_template
+- from django.http import HttpResponse
+- return HttpResponse(get_template(template_name).render(context))
+- make sure you have imported it in the urls
+01:07:25
+
+01:07:25
+create app
+- python manage.py startapp appname
+- the models.py allows us to declare fields in the db - create a class to inherit models.Model
+- when you create the app and make changes to the app, add it to settings INSTALLED APPS themn do migrate it by running python manage.py makemigrations&migrate
+- import import from .models the model you create into the admins.py file and do admin.site.register(the created model name) - this will add the new model to the admin
+- import the model into thw view, from .models import yourModelName
+- create a function that renders the view
+-  add that view to the url
+- add another parameter to the view function, to make the url dynamic, thus change it in all the files neccesary
+01:35:09
+
+01:35:09
+- it is better to use a slug (google stackoverflow django what is a slug)
+- slugs helps in the formations of urls instead of using ids in the url we should slugs.. they are basically url encoded values
+- you may create a slugField in django
+- with get_object_or_404, GET-> 1 object
+- filter-> a list (view.objects.filter(key=value) also know as a queryset
+- call .count on query set instead of len()
+- to maintain a unique slug
+- CRUD - create read update delete
+02:04:56
+
+02:04:56
+- routing
+- you app should do 1o1 thing so that you could reuse it in another project as a plugin
+02:15:00
+
+02:15:00
+- put the apps templates into its own template just like we did for the urls
+- to maje it even better, create a folder in the templates dir of the blog app, know as blog and move all the views into it
+- beside a form, add {% csrf_token %}
+- create a view for the form, form.py - it must be a class that inherits form.Form, from django form
+- create an instance of it in the form view, your form must inherit request.POST

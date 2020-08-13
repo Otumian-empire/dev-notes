@@ -1,0 +1,58 @@
+npm notes
+---------
+
+npm = node package manager
+
+npm provides online repositories for packages for nodejs and devs use
+ it locally to manage their dependencies
+
+npm -v : will display the version of npm on your device and that also
+ indicates that you have installed npm
+ 
+npm packages can be installed in two ways:
+    1. locally: locally installed packages only exist for the
+         applications for the application under development.
+         npm install <package name>: install package locally
+          in application we are developing and such can only be
+          accessed by that app alone
+    2. globally: globally installed packages can be access anywhere
+         npm install -g <package name>: installs package globally
+    
+Note that anything that can be used on the commandline should be globally
+ installed
+
+```
+But in general, it is a good practice to install the packages locally.
+ This is because you might be having a number of Node.js projects in
+ your system having a different version of each of the packages used 
+in them. 
+
+Thus, you should make a package global only when it has a CLI 
+ executable command and can be reused throughout the projects in your
+ system.
+``` 
+
+npm install: will resolve and fetch all of the necessary packages for the 
+application to run
+
+npm list -g --depth 0: checks how many global packages are installed
+
+npm uninstall <package_name>: uninstalls a package
+
+npm install <package_name> --save: adds package to package.json
+
+npm install <package_name> --no-save: does not add package to package.json
+
+npm install <package_name> --save-dev: adds package to package.json
+ as a dev package - ```devDependencies are packages used for 
+ development purposes — for example, for running tests or transpiling 
+ code.```
+
+npm install -g npm@latest: to update npm
+
+npm search <package name>: searched for a package
+
+
+
+https://www.edureka.co/blog/node-js-npm-tutorial/
+https://www.sitepoint.com/beginners-guide-node-package-manager/
