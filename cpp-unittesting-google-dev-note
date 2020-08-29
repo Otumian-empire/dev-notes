@@ -3,13 +3,18 @@ Introduction to Google C++ Unit Testing
 Source: https://medium.com/@rvarago/introduction-to-google-c-unit-testing-3d564c30f3b0
 
 
-Installation (install  into source directory, eg: /usr/src/gtest)
+Installation (installs into source directory, eg: /usr/src/gtest)
 sudo apt install libgtest-dev
 
 
-Compile with cmake and make (install does not exist)
+Compile with cmake and make 
+(install make and cmake if they do not exist
+sudo apt-get install build-essential to install make
+sudo apt-get install cmake or sudo snap install cmake --classic to install cmake
+)
+
 cd /usr/src/gtest
-sudo CMakeLists.txt
+sudo cmake CMakeLists.txt
 sudo make
 
 
