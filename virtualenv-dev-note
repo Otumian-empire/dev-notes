@@ -1,0 +1,51 @@
+Virtual Environment - virtualenv
+
+This is a python module just like pipenv that allows development of app such that the app has its own modules/packages to work without interfering with the system module. So if a module requires update and it is been update on our local/remote system, it does not affect the app.
+
+
+Installation
+pip install virtualenv
+
+
+Create a virtual environment
+Create a directory for you p
+ython project and with that directory, do, virtualenv <virtualenv_name>
+
+virtualenv is the module and <virtualenv_name> is the name of the virtual environment we
+want to create for our project. So virtualenv venv, creates a virtual environment called , venv.
+
+This will install all the tools to work with.
+
+
+Activate virtual environment
+source <virtualenv_name>/bin/activate.
+
+source venv/bin/activate activates the virtual environment you created earlier.
+One of the ways to know that you've activated the virtual environment is that the name of the virtual environment will appear before your computer name. Also which python will show the python path with the project dorectory name in the virtual environment directotory.
+
+
+Install a package
+pip install <package_name>
+
+
+Install package from requirements.txt
+pip install -r requirements.txt
+
+
+Show the installed packages in the virtual environment
+pip list
+pip freeze --local
+
+
+Save packages into a requirements.txt file
+pip list > requirements.txt
+
+
+Deactivate virtual environment
+deactivate
+
+Delete virtual environment
+rm -rf <virtualenv_name>
+
+Make sure you are in the same directory as the virtual environment.
+

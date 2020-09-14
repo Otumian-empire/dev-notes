@@ -7,7 +7,7 @@ int, float, double, char, string, void
 
 Function
 
-A function is a piece of code that performs a specific function
+A function is a piece of code that performs a specific task
 
 How to create a function
 
@@ -21,26 +21,26 @@ How to create a function
  either a letter, an underscore or a number. So a function can not
  have a any special character in it, such as +, -, / etc. Functions
  must not have spaces in their name. In place of the space use underscore.
- 
- Some examples of function names:
+
+Some examples of function names:
     - age
     - name1
     - player_1
-    
-<parameter list> is a made up of the parameters you want to pass to the function
- a parameter is something the data you want the function to compute upon
- If there is no need of a data to compute on then, the <parameter list> can be empty
- <parameter list> is just like a command separated list of declared variables, as in
- int min, int max, ... where int is the data type and, min and max are the parameter 
- (variable) name 
- 
- 
-<function body> is the actual code logic
+
+<parameter list> is a made up of the data you want to pass to the function.
+This is the same as the data you want the function to compute upon
+ If there is no need of a data to compute on, then the <parameter list> can be empty or void.
+ <parameter list> is just like a comma separated list of declared variables, as in
+ int min, int max, ... where int is the data type and, min and max are the parameter
+ (variable) name
+
+
+<function body> is the actual code logic or the step by step process to achieve the output
 
 { and }, specifies the entry (starting) and exiting (ending) point of the function.
  It is also delimits function body
- 
- 
+
+
 Calling a function
 write the function name with the required parameter list
 
@@ -49,7 +49,7 @@ A simple function that prints helloworld to the screen
 
 According to how to create a function, a function must have a <return type>, <function
  name>, a <parameter list> if data would be passed to the function and finaly and a <
-function body>. 
+function body>.
 
 
 Analysis
@@ -58,7 +58,7 @@ Analysis
 - from the problem, it seems that we can call the function, helloworld, so the <function
   name> will be helloworld
 - Our function will not compute on any data, so the <parameter list> will be empty
-- Our function prints "hello world", so the <function body> will print "hello world"
+- Our function prints "hello world", so the <function body> should print "hello world"
 
 
 
@@ -66,13 +66,13 @@ In short:
 
 <return type>: void
 <function name>: helloworld
-<parameter list>: none
+<parameter list>: none or void
 <function body>: prints hello world to screen
 
 
 Creating the function and running the program
 
-Create a file called, helloworld.cpp, in it, type the code below.
+Create a file called, helloworld.cpp. In it, type the code below.
 
 #include <iostream>
 
@@ -85,10 +85,10 @@ void helloworld() {
 
 
 int main() {
-    
+
     // calling helloworld
     helloworld();
-        
+
     return 0;
 }
 
@@ -98,7 +98,7 @@ To create a function, in the same file as the main function, either,
 1. the function implementation (definition) will be above the main function
 2. the function header (signature) will be above the main function and the function
  definition below the main function.
- 
+
 For the case of the above code, we'd have,
 
 Create a file called, helloworld_1.cpp, in it, type the code below.
@@ -111,10 +111,10 @@ using namespace std;
 void helloworld();
 
 int main() {
-    
+
     // calling helloworld
     helloworld();
-        
+
     return 0;
 }
 
@@ -132,7 +132,7 @@ Analysis:
         but lets assume the return type to be int
     - function computes on two data
     - function returns the sum of the 2 data
-    
+
 Code
 
 create a file called, sum_of_2_nums.cpp, and write the code below into
@@ -155,15 +155,15 @@ int main() {
     int sum_nums, a, b;
     a = 12;
     b = 24;
-    
+
     // calling sum_of_2_nums and passing two numbers
     sum_nums = sum_of_2_nums(a, b);
-    
+
     cout << "The sum of " << a << " and " << b << " is " << sum_nums << endl;
     // an alternative to the above line would be
     // cout << "The sum of " << a << " and " << b << " is " << sum_of_2_nums(a, b) << endl;
     // so that we won't have to create sum_nums variable
-    
+
     return 0;
 }
 
@@ -178,14 +178,14 @@ Header and source files
 
 Say we have a project where we will be creating a lot of funtions, it will be better
   we separate the functions from the main function.
-  
+
 We have seen an example where we had a function implementation before the in function,
-we have seen where the function declaration came before the main function then later the 
+we have seen where the function declaration came before the main function then later the
 function definition. The last of these is where we separate the function declarations into
 one file and the definitions into another file. Reference/include the path to the header
 file into the in the main function file and work with it.
 
-Consider an example where we create a function to perform basic arithmetics such as 
+Consider an example where we create a function to perform basic arithmetics such as
 addition, subtraction, multiplcation, and division
 
 As I am aware, you know what addition, subtraction, multiplcation and division is so no need
@@ -220,7 +220,7 @@ of a library with the critical information they need to know.
 from the Art and Science of C by Eric S. Roberts
 
 This is how we would have normally created our functions
- 
+
 create a file called, temp.cpp and write the code below into it.
 
 
@@ -237,22 +237,22 @@ int div_a(int x, int y);
 int main ()
 {
     int num1, num2;
-    
+
     num1 = 10;
     num2 = -4;
-    
+
     // adding num1 and num2
     cout << "The sum of " << num1 << " and " << num2 << " is " << add_a(num1, num2) << endl;
-    
+
     // subtraction num2 from num1
     cout << num1 << " minus " << num2 << " is " << subt_a(num1, num2) << endl;
 
     // multiplying num1 and num2
-    cout << "The product of " << num1 << " and " << num2 << " is " << mult_a(num1, num2) << endl; 
-    
+    cout << "The product of " << num1 << " and " << num2 << " is " << mult_a(num1, num2) << endl;
+
     // dividing num1 by num2
     cout << num1 << " divided by " << num2 << " is " << div_a(num1, num2) << endl;
-    
+
     return 0;
 }
 
@@ -320,7 +320,7 @@ you can look at this as:
 
 if (header file is not defined) {
     define header file
-} 
+}
 
 This will prevent the multiple inclusion of headers.
 
@@ -363,7 +363,7 @@ int mult_a(int x, int y) {
 int div_a(int x, int y) {
     // the denominator, y, must no be zero
     // if y is zero, return 0, else return x / y
-    
+
     if (y == 0) {
         return 0;
     } else {
@@ -372,13 +372,13 @@ int div_a(int x, int y) {
 }
 
 All we did was included the header file, arithmetic.hpp and wrote the function
- definitions into arithmetic.cpp. 
+ definitions into arithmetic.cpp.
 
 Now, what will actually make the difference. Add the path to the interface/header file
 
 Now just like we included, the header file (interface) into the source file, we shall
  do the same in the main.cpp file and make use of the functions.
- 
+
 In main.cpp, write the following,
 
 #include <iostream>
@@ -389,35 +389,28 @@ using namespace std;
 int main ()
 {
     int num1, num2;
-    
+
     num1 = 10;
     num2 = -4;
-    
+
     // adding num1 and num2
     cout << "The sum of " << num1 << " and " << num2 << " is " << add_a(num1, num2) << endl;
-    
+
     // subtraction num2 from num1
     cout << num1 << " minus " << num2 << " is " << subt_a(num1, num2) << endl;
 
     // multiplying num1 and num2
-    cout << "The product of " << num1 << " and " << num2 << " is " << mult_a(num1, num2) << endl; 
-    
+    cout << "The product of " << num1 << " and " << num2 << " is " << mult_a(num1, num2) << endl;
+
     // dividing num1 by num2
     cout << num1 << " divided by " << num2 << " is " << div_a(num1, num2) << endl;
-    
+
     return 0;
 }
 
 
-To compile, all that you do is compile the main.cpp and he source file, arithmetic.cpp, as in,
+To compile, all that you have to do is compile the main.cpp and he source file, arithmetic.cpp, as in,
 c++ main.cpp arithmetic.cpp and thats all.
 
 
 The end.
-
- 
-
-
-
-
-
