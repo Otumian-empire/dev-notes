@@ -1,0 +1,77 @@
+start psql on a Linux system, run this command:
+sudo -u postgres psql
+
+create a new database calledtest:
+CREATE DATABASE test;
+
+use database created:
+\connect test;
+
+get the full list of psql commands:
+\?
+
+create a table:
+CREATE TABLE courses(
+	c_no text PRIMARY KEY,
+	title text,
+	hours integer
+);
+
+insert:
+INSERT INTO courses(c_no, title, hours)
+VALUES('cs305', 'Networks', 50),
+('cs101', 'Intro to CS', 10);
+
+select:
+SELECT * FROM courses;
+
+joins:
+prob: select * from courses, exams;
+solu: select courses.title as course_title, exams.s_id as student_id, exams.score as scores from courses, exams where courses.c_no = exams.c_no;
+solu++: select courses.title as course_title, exams.s_id as student_id, exams.score as scores from courses join exams on courses.c_no = exams.c_no;
+
+subqueries:
+1- select name from students;
+2- select score from exams, students where exams.s_id = students.s_id and exams.c_no = 'cs305';
+3- select name, (select score from exams, students where exams.s_id = students.s_id and exams.c_no = 'cs305') from students;
+
+
+sorting:
+select * from exams order by score;
+
+
+changing and deleting data:
+update courses set hours = hours * 2 where c_no = 'cs301';
+
+delete from exams where score < 5;
+
+display schema:
+\d students
+
+display all tables:
+\d
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

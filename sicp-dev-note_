@@ -1,0 +1,129 @@
+Chapter 1
+Building Abstractions with Procedures
+
+Computational processes are abstract beings that inhabit computers. Data are abstract things that we process. A program (a pattern of rules) directs the process. 
+
+Every powerful language has three mechanismsto organize our ideas about processes:
+* primitive expressions: which represent the simplest entities the language is concerned with
+* means of combination: by which compound elements are built from simpler ones
+* means of abstraction: by which compound elements can be named and manipulated as units
+
+In programming, we deal with two kinds of elements: procedures and data.
+Informally, data is ``stuff'' that we want to manipulate, and procedures are descriptions of the rules for manipulating the data.
+
+
+(+ 1 2) -> 3
+(+ 2.7 10) -> 12.7
+
+A combination is an expression formed by delimiting a list of expressions within parentheses in order to denote procedure application. This has the operator followed by the operands as the argument. This follows the prefix notation.
+
+This supports nesting
+
+(+ (* 2 4) (/ 10 5)) 
+    which is similar to
+(+  (* 2 4)
+    (/ 10 5)) -> 10
+    
+    
+
+A critical aspect of a programming language is the means it provides for using names to refer to computational objects. We say that the name identifies a variable whose value is the object.
+
+In the Scheme dialect of Lisp, we name things with define.
+
+Typing (define <var> <val>)
+
+(define dob 1990)
+(define year 2020)
+(define age (- year dob))
+age
+
+
+(define pi 3.143)
+(define radius 5.6)
+(define circumference (* pi (* raduis radius)))
+circumference
+
+
+define is a means of abstraction. It allows us to use simple names to refer to the results of compound operations.
+
+The interpreter maintains a memory called the (global) environment that keeps track of the name-object pairs.
+
+procedure definitions is a much more powerful abstraction technique by which a compound operation can be given a name and then referred to as a unit.
+
+The general form of a procedure definition is
+(define (<name> <formal parameters>) <body>)
+
+Example is the square program
+
+(define (square x)
+    (* x x))
+
+(square 3) -> 9
+
+This abstraction can also be abstracted upon. COnsider the sum of squares program, making use of the square program.
+
+(define (sum-of-squares a b)
+    (+ (square a) (sqaure b)))
+
+(sum-of-sqaures 1 2) -> 5
+
+We can also consider another procedure
+
+(define (func a)
+    (sum-of-square (+ a 1) (* a 2)))
+    
+(func 3) -> 52
+
+lets break this down
+
+(func 3)
+(sum-of-square (+ 3 1) (* 3 2))
+(sum-of-square 4 6)
+(+ (square 4) (square 6))
+(+ (* 4 4) (* 6 6))
+(+ 16 36)
+-> 52
+
+
+case analysis is when we check for some predicate and based on that we execute some expression.
+Lisp for notating such a case analysis is called cond (which stands for conditional), 
+and it is used as follows:
+
+(define (abs x)  
+    (cond ((> x 0) x)
+        ((= x 0) 0)
+        ((< x 0) (- x))))
+
+|x| = +x
+
+The general form of a conditional expression is
+(cond (<p1> <e1>)
+      (<p2> <e2>)
+      (<pn> <en>))
+      
+where p is predicate and e is expression
+
+(define (abs x)
+  (cond ((< x 0) (- x))
+          (else x)))
+          
+If statement can also be used as in general, 
+    (if <predicate> <consequent> <alternative>)
+    
+(define (abs x)
+    (if (< x 0) (- x) x))
+    
+    
+In addition to primitive predicates such as <, =, and >, there is and, or and not (unary)
+
+The black box concept is also know as the procedural-abstraction. Say you have a procdure that makes use of other procedures in a manner that makes it hard to say how the procedure is actually doing the process.
+
+Lets say there is this procedure,
+
+(define (test x) (+ x 1))
+
+When using test, you can pass y to it or any other value as far as it is an integer value so basically, (define (test y) (+ y 1)) are the same. The kind of variable passed to it is local to the procedure.
+
+
+Procedures are, in effect, abstractions that describe compound operations on numbers independent of the particular numbers.
+Say we have (define (square n) (* n n)), this is a procedure to obtain the square of any number and not
